@@ -9,7 +9,10 @@ import thunkMiddleware from 'redux-thunk';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import * as reducers from './reducers';
-import ApplicationContainer from './containers/ApplicationContainer';
+import YTApplicationContainer from './containers/YTApplicationContainer';
+
+// integrate redux & react-router
+const history = createBrowserHistory();
 
 const createCustomStore = Redux.compose(
   Redux.applyMiddleware(thunkMiddleware, loggerMiddleware())
@@ -20,15 +23,15 @@ const store = createCustomStore(Redux.combineReducers({
   routing: ReactReduxRouter.routeReducer,
 }));
 
-const history = createBrowserHistory();
-
 ReactReduxRouter.syncReduxAndRouter(history, store);
+
+// needed for material-ui
 injectTapEventPlugin();
 
 ReactDOM.render((
   <ReactRedux.Provider store={store}>
     <ReactRouter.Router history={history}>
-      <ReactRouter.Route path="/" component={ApplicationContainer} />
+      <ReactRouter.Route path="/" component={YTApplicationContainer} />
     </ReactRouter.Router>
   </ReactRedux.Provider>
 ), document.getElementById('react-root'));
