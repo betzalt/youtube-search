@@ -1,5 +1,6 @@
 import React from 'react';
 import MUI from 'material-ui';
+import View from 'react-flexbox';
 
 export default class YTResult extends React.Component {
   static propTypes = {
@@ -38,7 +39,22 @@ export default class YTResult extends React.Component {
         />
 
         <MUI.CardMedia>
-          <img src={thumbnail} alt={title} />
+          <View style={{
+            display: 'block',
+            width: '100%',
+            paddingTop: '75%',
+            backgroundColor: MUI.Styles.Colors.grey300,
+          }} />
+
+          <img
+            src={thumbnail}
+            alt={`${title} thumbnail`}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            }}
+          />
         </MUI.CardMedia>
 
       </MUI.Card>
