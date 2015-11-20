@@ -13,6 +13,7 @@ describe('component:YTSearch', () => {
     const form = ReactTestUtils.findRenderedDOMComponentWithTag(instance, 'form');
 
     input.value = 'test';
+
     ReactTestUtils.Simulate.change(input);
     ReactTestUtils.Simulate.submit(form, {
       preventDefault: () => {},
