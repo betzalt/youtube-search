@@ -8,6 +8,14 @@ export default class YTSearch extends React.Component {
     onResetSearch: React.PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      focused: false,
+    };
+  }
+
   onSubmit(event) {
     event.preventDefault();
     const query = this.refs.queryInput.getValue();
@@ -44,10 +52,14 @@ export default class YTSearch extends React.Component {
               style={{
                 width: '100%',
               }}
+              onFocus={() => this.setState({focused: true})}
+              onBlur={() => this.setState({focused: false})}
             />
           </form>
 
-          <MUI.IconButton onClick={::this.onClear}>
+          <MUI.IconButton onClick={::this.onClear} style={{
+            opacity: this.state.focused ? 1 : 0,
+          }}>
             <MUI.FontIcon className="material-icons">clear</MUI.FontIcon>
           </MUI.IconButton>
         </MUI.Paper>
