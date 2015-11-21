@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from 'react-flexbox';
-import { searchAction } from '../actions';
+import { searchAction, resetSearchResults } from '../actions';
 import YTSearch from '../components/YTSearch';
 import YTResult from '../components/YTResult';
 
@@ -17,7 +17,10 @@ export class YTApplicationContainer extends React.Component {
       <View column style={{
         padding: '20px',
       }}>
-        <YTSearch onSearch={q => dispatch(searchAction(q))} />
+        <YTSearch
+          onSearch={q => dispatch(searchAction(q))}
+          onResetSearch={() => dispatch(resetSearchResults())}
+        />
         <ul style={{margin: '0', padding: '0'}}>
           {
             results.map(result =>

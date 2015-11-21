@@ -5,7 +5,9 @@ import {
   REQUEST_RESULTS,
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
+  RESET_CURRENT_QUERY,
 } from '../../src/constants/actionTypes';
+import { resetSearchResults } from '../../src/actions';
 
 describe('actions', () => {
   describe('searchAction', () => {
@@ -74,6 +76,14 @@ describe('actions', () => {
           payload: 'test failure',
         });
         done();
+      });
+    });
+  });
+
+  describe('resetSearchResults', () => {
+    it('should dispatch RESET_CURRENT_QUERY', () => {
+      expect(resetSearchResults()).toEqual({
+        type: RESET_CURRENT_QUERY,
       });
     });
   });

@@ -2,6 +2,7 @@ import {
   REQUEST_RESULTS,
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
+  RESET_CURRENT_QUERY,
 } from '../constants/actionTypes';
 import { requestSearchResults } from '../api';
 
@@ -25,3 +26,7 @@ export const searchAction = (query) => (dispatch) => {
       payload: error,
     }));
 };
+
+export const resetSearchResults = () => ({
+  type: RESET_CURRENT_QUERY,
+});

@@ -5,6 +5,7 @@ import MUI from 'material-ui';
 export default class YTSearch extends React.Component {
   static propTypes = {
     onSearch: React.PropTypes.func.isRequired,
+    onResetSearch: React.PropTypes.func.isRequired,
   };
 
   onSubmit(event) {
@@ -17,25 +18,38 @@ export default class YTSearch extends React.Component {
     }
   }
 
+  onClear() {
+    this.props.onResetSearch();
+    this.refs.queryInput.setValue('');
+    this.refs.queryInput.focus();
+  }
+
   render() {
     return (
       <View>
         <MUI.Paper style={{
           display: 'flex',
-          alignItems: 'center',
           justifyContent: 'space-around',
-          padding: '0 10px',
           width: '100%',
-          height: '100%',
         }}>
-          <MUI.FontIcon className="material-icons">search</MUI.FontIcon>
+          <MUI.IconButton>
+            <MUI.FontIcon className="material-icons">search</MUI.FontIcon>
+          </MUI.IconButton>
+
           <form onSubmit={::this.onSubmit}>
             <MUI.TextField
               ref="queryInput"
               hintText="Search"
               underlineStyle={{display: 'none'}}
+              style={{
+                width: '100%',
+              }}
             />
           </form>
+
+          <MUI.IconButton onClick={::this.onClear}>
+            <MUI.FontIcon className="material-icons">clear</MUI.FontIcon>
+          </MUI.IconButton>
         </MUI.Paper>
       </View>
     );

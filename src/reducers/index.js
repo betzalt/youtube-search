@@ -2,6 +2,7 @@ import {
   REQUEST_RESULTS,
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
+  RESET_CURRENT_QUERY,
 } from '../constants/actionTypes';
 
 export const currentQuery = (state = null, action) => {
@@ -9,6 +10,9 @@ export const currentQuery = (state = null, action) => {
 
   case REQUEST_RESULTS:
     return action.payload.query;
+
+  case RESET_CURRENT_QUERY:
+    return null;
 
   default:
     return state;
