@@ -7,8 +7,7 @@ import {
   resetSearchResults,
 } from '../actions';
 import YTSearch from '../components/YTSearch';
-import YTResult from '../components/YTResult';
-import MUI from 'material-ui';
+import YTResultsList from '../components/YTResultsList';
 
 export class YTApplicationContainer extends React.Component {
   static propTypes = {
@@ -20,14 +19,6 @@ export class YTApplicationContainer extends React.Component {
   render() {
     const { dispatch, results, currentQuery } = this.props;
 
-    const loadMoreButton = results.length > 0 ? (
-      <MUI.RaisedButton
-        label="Load more"
-        style={{marginTop: '20px'}}
-        onClick={() => dispatch(loadMoreAction(currentQuery))}
-      />
-    ) : null;
-
     return (
       <View column style={{
         padding: '20px',
@@ -36,15 +27,11 @@ export class YTApplicationContainer extends React.Component {
           onSearch={q => dispatch(searchAction(q))}
           onResetSearch={() => dispatch(resetSearchResults())}
         />
-        <ul style={{margin: '0', padding: '0'}}>
-          {
-            results.map(result =>
-              <YTResult key={result.id} { ...result } />
-            )
-          }
-        </ul>
 
-        {loadMoreButton}
+        <YTResultsList
+          results={results}
+          onLoadMore={() => dispatch(loadMoreAction(currentQuery))}
+        />
       </View>
     );
   }
