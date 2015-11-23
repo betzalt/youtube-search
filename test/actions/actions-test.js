@@ -6,6 +6,9 @@ import {
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
   RESET_CURRENT_QUERY,
+  REQUEST_MORE_RESULTS,
+  REQUEST_MORE_RESULTS_SUCCESS,
+  REQUEST_MORE_RESULTS_FAILURE,
 } from '../../src/constants/actionTypes';
 import { resetSearchResults } from '../../src/actions';
 
@@ -73,10 +76,122 @@ describe('actions', () => {
         const action = fakeDispatch.calls[1].arguments[0];
         expect(action).toEqual({
           type: REQUEST_RESULTS_FAILURE,
-          payload: 'test failure',
+          payload: {
+            query: 'test',
+            error: 'test failure',
+          },
         });
         done();
       });
+    });
+  });
+
+  describe('loadMoreAction', () => {
+    it('should dispatch REQUEST_MORE_RESULTS', (done) => {
+      const fakeDispatch = expect.createSpy();
+      const fakeGetState = expect.createSpy().andReturn({
+        searches: {
+          test: {
+            nextPageToken: 'pageToken',
+          },
+        },
+      });
+
+      const fakeRequestMoreResults = expect.createSpy().andReturn(
+        Promise.resolve(formattedSearchFixture)
+      );
+
+      const { loadMoreAction } = proxyquire('../../src/actions', {
+        '../api': {
+          requestMoreResults: fakeRequestMoreResults,
+        },
+      });
+
+      loadMoreAction('test')(fakeDispatch, fakeGetState).then(() => {
+        const action = fakeDispatch.calls[0].arguments[0];
+        expect(action).toEqual({
+          type: REQUEST_MORE_RESULTS,
+          payload: {
+            query: 'test',
+          },
+        });
+        done();
+      });
+    });
+
+    it('should dispatch REQUEST_MORE_RESULTS_SUCCESS', (done) => {
+      const fakeDispatch = expect.createSpy();
+      const fakeGetState = expect.createSpy().andReturn({
+        searches: {
+          test: {
+            nextPageToken: 'pageToken',
+          },
+        },
+      });
+
+      const fakeRequestMoreResults = expect.createSpy().andReturn(
+        Promise.resolve(formattedSearchFixture)
+      );
+
+      const { loadMoreAction } = proxyquire('../../src/actions', {
+        '../api': {
+          requestMoreResults: fakeRequestMoreResults,
+        },
+      });
+
+      loadMoreAction('test')(fakeDispatch, fakeGetState).then(() => {
+        const action = fakeDispatch.calls[1].arguments[0];
+        expect(action).toEqual({
+          type: REQUEST_MORE_RESULTS_SUCCESS,
+          payload: formattedSearchFixture,
+        });
+        done();
+      });
+    });
+
+    it('should dispatch REQUEST_MORE_RESULTS_FAILURE', (done) => {
+      const fakeDispatch = expect.createSpy();
+      const fakeGetState = expect.createSpy().andReturn({
+        searches: {
+          test: {
+            nextPageToken: 'pageToken',
+          },
+        },
+      });
+
+      const fakeRequestMoreResults = expect.createSpy().andReturn(
+        Promise.reject('test failure')
+      );
+
+      const { loadMoreAction } = proxyquire('../../src/actions', {
+        '../api': {
+          requestMoreResults: fakeRequestMoreResults,
+        },
+      });
+
+      loadMoreAction('test')(fakeDispatch, fakeGetState).then(() => {
+        const action = fakeDispatch.calls[1].arguments[0];
+        expect(action).toEqual({
+          type: REQUEST_MORE_RESULTS_FAILURE,
+          payload: {
+            query: 'test',
+            error: 'test failure',
+          },
+        });
+        done();
+      });
+    });
+
+    it('should do nothing if nextPageToken doesn\'t exist', () => {
+      const fakeDispatch = expect.createSpy();
+      const fakeGetState = expect.createSpy().andReturn({
+        searches: {
+          test: {},
+        },
+      });
+
+      const { loadMoreAction } = require('../../src/actions');
+      expect(loadMoreAction('test')(fakeDispatch, fakeGetState)).toNotExist();
     });
   });
 

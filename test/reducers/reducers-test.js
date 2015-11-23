@@ -4,6 +4,8 @@ import {
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
   RESET_CURRENT_QUERY,
+  REQUEST_MORE_RESULTS_SUCCESS,
+  REQUEST_MORE_RESULTS_FAILURE,
 } from '../../src/constants/actionTypes';
 import { currentQuery, searches } from '../../src/reducers';
 
@@ -112,6 +114,71 @@ describe('reducers', () => {
         test: {
           query: 'test',
           results: [],
+          loading: false,
+          error: true,
+        },
+      };
+
+      expect(searches(initialState, action)).toEqual(expectedState);
+    });
+
+    it('should handle REQUEST_MORE_RESULTS_SUCCESS', () => {
+      const initialState = {
+        test: {
+          query: 'test',
+          nextPageToken: 'token1',
+          results: [1, 2, 3],
+          loading: true,
+          error: false,
+        },
+      };
+
+      const action = {
+        type: REQUEST_MORE_RESULTS_SUCCESS,
+        payload: {
+          query: 'test',
+          nextPageToken: 'token2',
+          results: [4, 5, 6],
+        },
+      };
+
+      const expectedState = {
+        test: {
+          query: 'test',
+          nextPageToken: 'token2',
+          results: [1, 2, 3, 4, 5, 6],
+          loading: false,
+          error: false,
+        },
+      };
+
+      expect(searches(initialState, action)).toEqual(expectedState);
+    });
+
+    it('should handle REQUEST_MORE_RESULTS_FAILURE', () => {
+      const initialState = {
+        test: {
+          query: 'test',
+          nextPageToken: 'token1',
+          results: [1, 2, 3],
+          loading: true,
+          error: false,
+        },
+      };
+
+      const action = {
+        type: REQUEST_MORE_RESULTS_FAILURE,
+        payload: {
+          query: 'test',
+          error: new Error('some error idk'),
+        },
+      };
+
+      const expectedState = {
+        test: {
+          query: 'test',
+          nextPageToken: 'token1',
+          results: [1, 2, 3],
           loading: false,
           error: true,
         },

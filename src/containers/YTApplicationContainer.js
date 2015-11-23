@@ -1,18 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import View from 'react-flexbox';
-import { searchAction, resetSearchResults } from '../actions';
+import {
+  searchAction,
+  loadMoreAction,
+  resetSearchResults,
+} from '../actions';
 import YTSearch from '../components/YTSearch';
 import YTResult from '../components/YTResult';
+import MUI from 'material-ui';
 
 export class YTApplicationContainer extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     results: React.PropTypes.array.isRequired,
+    currentQuery: React.PropTypes.string,
   };
 
   render() {
-    const { dispatch, results } = this.props;
+    const { dispatch, results, currentQuery } = this.props;
     return (
       <View column style={{
         padding: '20px',
@@ -28,16 +34,29 @@ export class YTApplicationContainer extends React.Component {
             )
           }
         </ul>
+
+        <MUI.RaisedButton
+          label="Load more"
+          style={{marginTop: '20px'}}
+          onClick={() => dispatch(loadMoreAction(currentQuery))}
+        />
       </View>
     );
   }
 }
 
-const currentSearch = state =>
-  state.searches[state.currentQuery] || {
+const mapStateToProps = state => {
+  const { currentQuery, searches } = state;
+  const currentSearch = searches[currentQuery] || {
     error: false,
     loading: false,
     results: [],
   };
 
-export default connect(currentSearch)(YTApplicationContainer);
+  return {
+    currentQuery,
+    ...currentSearch,
+  };
+};
+
+export default connect(mapStateToProps)(YTApplicationContainer);

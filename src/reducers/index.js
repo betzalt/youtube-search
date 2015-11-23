@@ -3,7 +3,9 @@ import {
   REQUEST_RESULTS_SUCCESS,
   REQUEST_RESULTS_FAILURE,
   RESET_CURRENT_QUERY,
-} from '../constants/actionTypes';
+  REQUEST_MORE_RESULTS_SUCCESS,
+  REQUEST_MORE_RESULTS_FAILURE,
+} from '../../src/constants/actionTypes';
 
 export const currentQuery = (state = null, action) => {
   switch (action.type) {
@@ -43,7 +45,22 @@ export const searches = (state = {}, action) => {
       },
     };
 
+  case REQUEST_MORE_RESULTS_SUCCESS:
+    return {
+      ...state,
+      [action.payload.query]: {
+        ...action.payload,
+        results: [
+          ...state[action.payload.query].results,
+          ...action.payload.results,
+        ],
+        loading: false,
+        error: false,
+      },
+    };
+
   case REQUEST_RESULTS_FAILURE:
+  case REQUEST_MORE_RESULTS_FAILURE:
     return {
       ...state,
       [action.payload.query]: {

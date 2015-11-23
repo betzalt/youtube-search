@@ -2,7 +2,11 @@ import expect from 'expect';
 import nock from 'nock';
 import rawSearchFixture from '../fixtures/rawSearch.json';
 import formattedSearchFixture from '../fixtures/formattedSearch.json';
-import { formatSearch, requestSearchResults } from '../../src/api';
+import {
+  formatSearch,
+  requestSearchResults,
+  requestMoreResults,
+} from '../../src/api';
 
 describe('api', () => {
   describe('formatSearch', () => {
@@ -34,6 +38,19 @@ describe('api', () => {
           expect(response).toEqual(formattedSearchFixture);
           done();
         });
+    });
+  });
+
+  describe('requestMoreResults', (done) => {
+    it('should request more search results for a query using a pageToken', () => {
+      const YT = nock('https://www.googleapis.com')
+        .get('/youtube/v3/search?part=snippet&type=video&maxResults=25&key=AIzaSyAe_7Gr4-9RNPW9RTusvRTzQ3-M0pz0_i0&q=test&pageToken=testPageToken')
+        .reply(200, rawSearchFixture);
+
+      requestMoreResults('test', 'testPageToken').then(() => {
+        YT.done();
+        done();
+      });
     });
   });
 });
