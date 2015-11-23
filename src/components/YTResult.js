@@ -1,6 +1,6 @@
 import React from 'react';
 import MUI from 'material-ui';
-import View from 'react-flexbox';
+import YTResultMedia from './YTResultMedia';
 
 export default class YTResult extends React.Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export default class YTResult extends React.Component {
   };
 
   render() {
-    const { title, channelTitle, thumbnail } = this.props;
+    const { id, title, channelTitle, thumbnail } = this.props;
     return (
       <MUI.Card style={{width: '100%', marginTop: '20px'}}>
         <MUI.CardHeader
@@ -38,25 +38,11 @@ export default class YTResult extends React.Component {
           }
         />
 
-        <MUI.CardMedia>
-          <View style={{
-            display: 'block',
-            width: '100%',
-            paddingTop: '75%',
-            backgroundColor: MUI.Styles.Colors.grey300,
-          }} />
-
-          <img
-            src={thumbnail}
-            alt={`${title} thumbnail`}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-            }}
-          />
-        </MUI.CardMedia>
-
+        <YTResultMedia
+          id={id}
+          title={title}
+          thumbnail={thumbnail}
+        />
       </MUI.Card>
     );
   }
