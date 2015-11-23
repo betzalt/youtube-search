@@ -19,6 +19,15 @@ export class YTApplicationContainer extends React.Component {
 
   render() {
     const { dispatch, results, currentQuery } = this.props;
+
+    const loadMoreButton = results.length > 0 ? (
+      <MUI.RaisedButton
+        label="Load more"
+        style={{marginTop: '20px'}}
+        onClick={() => dispatch(loadMoreAction(currentQuery))}
+      />
+    ) : null;
+
     return (
       <View column style={{
         padding: '20px',
@@ -35,11 +44,7 @@ export class YTApplicationContainer extends React.Component {
           }
         </ul>
 
-        <MUI.RaisedButton
-          label="Load more"
-          style={{marginTop: '20px'}}
-          onClick={() => dispatch(loadMoreAction(currentQuery))}
-        />
+        {loadMoreButton}
       </View>
     );
   }
