@@ -13,29 +13,19 @@ export const formatSearch = (query, response) => ({
   })),
 });
 
-export const requestSearchResults = (query) => {
-  const url = 'https://www.googleapis.com/youtube/v3/search' +
+export const requestSearchResults = (query, pageToken) => {
+  let url = 'https://www.googleapis.com/youtube/v3/search' +
     '?part=snippet' +
     '&type=video' +
     '&maxResults=25' +
     '&key=AIzaSyAe_7Gr4-9RNPW9RTusvRTzQ3-M0pz0_i0' +
     `&q=${query}`;
 
+  if (pageToken) {
+    url = `${url}&pageToken=${pageToken}`;
+  }
+
   return fetch(url)
     .then(response => response.json())
     .then(response => formatSearch(query, response));
-};
-
-export const requestMoreResults = (query, pageToken) => {
-  const url = 'https://www.googleapis.com/youtube/v3/search' +
-    '?part=snippet' +
-    '&type=video' +
-    '&maxResults=25' +
-    '&key=AIzaSyAe_7Gr4-9RNPW9RTusvRTzQ3-M0pz0_i0' +
-    `&q=${query}` +
-    `&pageToken=${pageToken}`;
-
-  return fetch(url)
-    .then(response => response.json())
-    .then(response => formatSearch(query, response))
 };

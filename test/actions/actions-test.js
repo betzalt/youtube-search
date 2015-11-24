@@ -97,13 +97,13 @@ describe('actions', () => {
         },
       });
 
-      const fakeRequestMoreResults = expect.createSpy().andReturn(
+      const fakeRequestSearchResults = expect.createSpy().andReturn(
         Promise.resolve(formattedSearchFixture)
       );
 
       const { loadMoreAction } = proxyquire('../../src/actions', {
         '../api': {
-          requestMoreResults: fakeRequestMoreResults,
+          requestSearchResults: fakeRequestSearchResults,
         },
       });
 
@@ -129,13 +129,13 @@ describe('actions', () => {
         },
       });
 
-      const fakeRequestMoreResults = expect.createSpy().andReturn(
+      const fakeRequestSearchResults = expect.createSpy().andReturn(
         Promise.resolve(formattedSearchFixture)
       );
 
       const { loadMoreAction } = proxyquire('../../src/actions', {
         '../api': {
-          requestMoreResults: fakeRequestMoreResults,
+          requestSearchResults: fakeRequestSearchResults,
         },
       });
 
@@ -159,13 +159,13 @@ describe('actions', () => {
         },
       });
 
-      const fakeRequestMoreResults = expect.createSpy().andReturn(
+      const fakeRequestSearchResults = expect.createSpy().andReturn(
         Promise.reject('test failure')
       );
 
       const { loadMoreAction } = proxyquire('../../src/actions', {
         '../api': {
-          requestMoreResults: fakeRequestMoreResults,
+          requestSearchResults: fakeRequestSearchResults,
         },
       });
 

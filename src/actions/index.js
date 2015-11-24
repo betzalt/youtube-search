@@ -7,7 +7,7 @@ import {
   REQUEST_MORE_RESULTS_SUCCESS,
   REQUEST_MORE_RESULTS_FAILURE,
 } from '../constants/actionTypes';
-import { requestSearchResults, requestMoreResults } from '../api';
+import { requestSearchResults } from '../api';
 
 export const searchAction = (query) => (dispatch) => {
   dispatch({
@@ -44,7 +44,7 @@ export const loadMoreAction = (query) => (dispatch, getState) => {
       },
     });
 
-    return requestMoreResults(query, nextPageToken)
+    return requestSearchResults(query, nextPageToken)
       .then(response => dispatch({
         type: REQUEST_MORE_RESULTS_SUCCESS,
         payload: {
