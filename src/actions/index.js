@@ -61,6 +61,6 @@ export const loadMoreAction = (query) => (dispatch, getState) => {
   }
 };
 
-export const resetSearchResults = () => ({
+export const resetAction = () => ({
   type: RESET_CURRENT_QUERY,
 });

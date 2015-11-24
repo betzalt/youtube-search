@@ -10,7 +10,7 @@ import {
   REQUEST_MORE_RESULTS_SUCCESS,
   REQUEST_MORE_RESULTS_FAILURE,
 } from '../../src/constants/actionTypes';
-import { resetSearchResults } from '../../src/actions';
+import { resetAction } from '../../src/actions';
 
 describe('actions', () => {
   describe('searchAction', () => {
@@ -195,9 +195,9 @@ describe('actions', () => {
     });
   });
 
-  describe('resetSearchResults', () => {
+  describe('resetAction', () => {
     it('should dispatch RESET_CURRENT_QUERY', () => {
-      expect(resetSearchResults()).toEqual({
+      expect(resetAction()).toEqual({
         type: RESET_CURRENT_QUERY,
       });
     });

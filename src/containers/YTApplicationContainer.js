@@ -4,7 +4,7 @@ import View from 'react-flexbox';
 import {
   searchAction,
   loadMoreAction,
-  resetSearchResults,
+  resetAction,
 } from '../actions';
 import YTSearch from '../components/YTSearch';
 import YTResultsList from '../components/YTResultsList';
@@ -25,7 +25,7 @@ export class YTApplicationContainer extends React.Component {
       }}>
         <YTSearch
           onSearch={q => dispatch(searchAction(q))}
-          onResetSearch={() => dispatch(resetSearchResults())}
+          onResetSearch={() => dispatch(resetAction())}
         />
 
         <YTResultsList
