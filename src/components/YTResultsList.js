@@ -16,7 +16,10 @@ export default class YTResultsList extends React.Component {
       return (
         <MUI.RaisedButton
           label="Load more"
-          style={{marginTop: '20px'}}
+          style={{
+            marginTop: '20px',
+            marginBottom: '80px',
+          }}
           onClick={onLoadMore}
         />
       );
