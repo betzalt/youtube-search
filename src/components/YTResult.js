@@ -18,20 +18,7 @@ export default class YTResult extends React.Component {
           title={title}
           subtitle={channelTitle}
           style={{
-            display: 'flex',
-            position: 'relative',
-            width: '100%',
-            flexWrap: 'wrap',
-          }}
-          textStyle={{
-            flexBasis: '80%',
-            overflow: 'hidden',
-          }}
-          titleStyle={{
-            width: '100%',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            height: 'auto',
           }}
           avatar={
             <MUI.Avatar style={{display: 'none'}} /> // cant disable this shit
