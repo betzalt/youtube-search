@@ -49,44 +49,25 @@ export default class YTResult extends React.Component {
       </div>
     );
 
-    if (isPlaceholder) {
-      return (
-        <MUI.Card style={{width: '100%', marginTop: '20px'}}>
-          <MUI.CardHeader
-            title={titlePlaceholder}
-            subtitle={subtitlePlaceholder}
-            style={{height: 'auto'}}
-            textStyle={{width: '100%'}}
-            avatar={<MUI.Avatar style={{display: 'none'}} />} // cant disable this shit
-          />
-
-          <MUI.CardMedia>
-            {mediaPlaceholder}
-          </MUI.CardMedia>
-        </MUI.Card>
-      );
-    }
-
     return (
       <MUI.Card style={{width: '100%', marginTop: '20px'}}>
         <MUI.CardHeader
-          title={title}
-          subtitle={channelTitle}
-          style={{
-            height: 'auto',
-          }}
-          avatar={
-            <MUI.Avatar style={{display: 'none'}} /> // cant disable this shit
-          }
+          title={isPlaceholder ? titlePlaceholder : title}
+          subtitle={isPlaceholder ? subtitlePlaceholder : channelTitle}
+          style={{height: 'auto'}}
+          textStyle={{width: '100%'}}
+          avatar={<MUI.Avatar style={{display: 'none'}} />} // cant disable this shit
         />
 
         <MUI.CardMedia>
           {mediaPlaceholder}
-          <YTResultMedia
-            id={id}
-            title={title}
-            thumbnail={thumbnail}
-          />
+          {isPlaceholder ? <div /> : (
+            <YTResultMedia
+              id={id}
+              title={title}
+              thumbnail={thumbnail}
+            />
+          )}
         </MUI.CardMedia>
       </MUI.Card>
     );

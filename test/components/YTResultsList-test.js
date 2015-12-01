@@ -31,7 +31,7 @@ describe('component:YTResultsList', () => {
     );
 
     const output = renderer.getRenderOutput();
-    const list = output.props.children;
+    const [ list ] = output.props.children;
     expect(list.props.children.length).toBe(10);
   });
 
@@ -63,7 +63,8 @@ describe('component:YTResultsList', () => {
     );
 
     const output = renderer.getRenderOutput();
-    expect(output.props.children.type).toBe('ul'); // no button
+    const [ , loadMoreButton ] = output.props.children;
+    expect(loadMoreButton).toNotExist();
   });
 
   it('should not render a load more button if there aren\'t any results', () => {

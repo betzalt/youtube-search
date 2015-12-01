@@ -31,28 +31,18 @@ export default class YTResultsList extends React.Component {
   render() {
     const { loading, results } = this.props;
 
-    if (loading) {
-      return (
-        <View column>
-          <ul style={{margin: 0, padding: 0}}>
-            {
-              array(10).map(idx =>
-                <YTResult key={idx} isPlaceholder />
-              )
-            }
-          </ul>
-        </View>
-      );
-    }
+    const placeholderItems = array(10).map(idx =>
+      <YTResult key={idx} isPlaceholder />
+    );
+
+    const resultItems = results.map(result =>
+      <YTResult key={result.id} { ...result } />
+    );
 
     return (
       <View column>
         <ul style={{margin: 0, padding: 0}}>
-          {
-            results.map(result =>
-              <YTResult key={result.id} { ...result } />
-            )
-          }
+          {loading ? placeholderItems : resultItems}
         </ul>
         {this.renderLoadMoreButton()}
       </View>
