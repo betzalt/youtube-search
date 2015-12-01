@@ -1,18 +1,13 @@
 /* eslint-disable no-var */
 
 var path = require('path');
-var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'webpack-hot-middleware/client',
-    './src/index.js',
-  ],
+  entry: './src/index.js',
 
   output: {
     path: path.join(__dirname, '../src/build'),
     filename: 'bundle.js',
-    publicPath: '/build/',
   },
 
   module: {
@@ -25,10 +20,10 @@ module.exports = {
     ],
   },
 
-  devtool: 'eval',
+  devtool: 'source-map',
 
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-  ],
+  devServer: {
+    contentBase: path.join(__dirname, '../src/'),
+    publicPath: '/build/',
+  },
 };
