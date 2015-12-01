@@ -16,7 +16,7 @@ describe('component:YTResultMedia', () => {
     );
 
     const output = renderer.getRenderOutput();
-    const [ , thumbnail ] = output.props.children;
+    const [ thumbnail ] = output.props.children;
     expect(thumbnail.type).toBe('img');
   });
 
@@ -31,7 +31,8 @@ describe('component:YTResultMedia', () => {
     );
 
     const output = renderer.getRenderOutput();
-    output.props.onClick();
+    const [ thumbnail ] = output.props.children;
+    thumbnail.props.onClick();
 
     const updatedOutput = renderer.getRenderOutput();
     const [ , videoContainer ] = updatedOutput.props.children;

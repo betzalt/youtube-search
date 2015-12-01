@@ -10,6 +10,7 @@ describe('component:YTResultsList', () => {
     renderer.render(
       <YTResultsList
         results={formattedSearch.results}
+        loading={false}
         onLoadMore={expect.createSpy()}
       />
     );
@@ -19,12 +20,28 @@ describe('component:YTResultsList', () => {
     expect(list.props.children.length).toBe(25);
   });
 
+  it('should render 10 placeholder results while loading', () => {
+    const renderer = ReactTestUtils.createRenderer();
+    renderer.render(
+      <YTResultsList
+        results={[]}
+        loading
+        onLoadMore={expect.createSpy()}
+      />
+    );
+
+    const output = renderer.getRenderOutput();
+    const list = output.props.children;
+    expect(list.props.children.length).toBe(10);
+  });
+
   it('should render a load more button that calls props.onLoadMore', () => {
     const fakeOnLoadMore = expect.createSpy();
     const renderer = ReactTestUtils.createRenderer();
     renderer.render(
       <YTResultsList
         results={formattedSearch.results}
+        loading={false}
         onLoadMore={fakeOnLoadMore}
       />
     );
@@ -35,11 +52,26 @@ describe('component:YTResultsList', () => {
     expect(fakeOnLoadMore).toHaveBeenCalled();
   });
 
-  it('should not render a load more button if there aren\t any results', () => {
+  it('should not render a load more button if results are loading', () => {
+    const renderer = ReactTestUtils.createRenderer();
+    renderer.render(
+      <YTResultsList
+        results={formattedSearch.results}
+        loading
+        onLoadMore={expect.createSpy()}
+      />
+    );
+
+    const output = renderer.getRenderOutput();
+    expect(output.props.children.type).toBe('ul'); // no button
+  });
+
+  it('should not render a load more button if there aren\'t any results', () => {
     const renderer = ReactTestUtils.createRenderer();
     renderer.render(
       <YTResultsList
         results={[]}
+        loading={false}
         onLoadMore={expect.createSpy()}
       />
     );
