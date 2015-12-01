@@ -1,6 +1,4 @@
 import React from 'react';
-import MUI from 'material-ui';
-import View from 'react-flexbox';
 import YouTube from 'react-youtube';
 
 export default class YTResultMedia extends React.Component {
@@ -18,57 +16,50 @@ export default class YTResultMedia extends React.Component {
     };
   }
 
-  renderVideo() {
-    if (this.state.loaded) {
-      return (
-        <View style={{
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          width: '100%',
-          height: '100%',
-        }}>
-          <YouTube
-            url={`https://youtube.com/watch?v=${this.props.id}`}
-            opts={{
-              width: '100%',
-              height: '100%',
-              playerVars: {
-                autoplay: 1,
-              },
-            }}
-          />
-        </View>
-      );
-    }
-  }
+  render() {
+    const coverStyle = {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      width: '100%',
+      height: '100%',
+    };
 
-  renderThumbnail() {
-    return (
+    const thumbnail = (
       <img
         src={this.props.thumbnail}
         alt={`${this.props.title} thumbnail`}
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
+          ...coverStyle,
+          zIndex: 1,
         }}
+        onClick={() => this.setState({loaded: true})}
       />
     );
-  }
 
-  render() {
+    const video = (
+      <div style={{
+        ...coverStyle,
+        zIndex: 2,
+      }}>
+        <YouTube
+          url={`https://youtube.com/watch?v=${this.props.id}`}
+          opts={{
+            width: '100%',
+            height: '100%',
+            playerVars: {
+              autoplay: 1,
+            },
+          }}
+        />
+      </div>
+    );
+
     return (
-      <MUI.CardMedia onClick={() => this.setState({loaded: true})}>
-        <View style={{
-          display: 'block',
-          position: 'relative',
-          width: '100%',
-          paddingTop: '75%',
-          backgroundColor: MUI.Styles.Colors.grey300,
-        }} />
-        {this.state.loaded ? this.renderVideo() : this.renderThumbnail()}
-      </MUI.CardMedia>
+      <div>
+        {thumbnail}
+        {this.state.loaded ? video : null}
+      </div>
     );
   }
 }
