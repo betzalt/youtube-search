@@ -13,11 +13,12 @@ export class YTApplicationContainer extends React.Component {
   static propTypes = {
     dispatch: React.PropTypes.func.isRequired,
     results: React.PropTypes.array.isRequired,
+    loading: React.PropTypes.bool.isRequired,
     currentQuery: React.PropTypes.string,
   };
 
   render() {
-    const { dispatch, results, currentQuery } = this.props;
+    const { dispatch, results, loading, currentQuery } = this.props;
 
     return (
       <View column style={{
@@ -30,6 +31,7 @@ export class YTApplicationContainer extends React.Component {
 
         <YTResultsList
           results={results}
+          loading={loading}
           onLoadMore={() => dispatch(loadMoreAction(currentQuery))}
         />
       </View>
