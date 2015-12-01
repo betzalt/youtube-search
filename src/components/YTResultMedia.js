@@ -12,7 +12,8 @@ export default class YTResultMedia extends React.Component {
     super(props);
 
     this.state = {
-      loaded: false,
+      videoStarted: false,
+      thumbnailLoaded: false,
     };
   }
 
@@ -32,8 +33,11 @@ export default class YTResultMedia extends React.Component {
         style={{
           ...coverStyle,
           zIndex: 1,
+          opacity: this.state.thumbnailLoaded ? 1 : 0,
+          transition: 'opacity ease 100ms',
         }}
-        onClick={() => this.setState({loaded: true})}
+        onLoad={() => this.setState({thumbnailLoaded: true})}
+        onClick={() => this.setState({videoStarted: true})}
       />
     );
 
@@ -58,7 +62,7 @@ export default class YTResultMedia extends React.Component {
     return (
       <div>
         {thumbnail}
-        {this.state.loaded ? video : null}
+        {this.state.videoStarted ? video : null}
       </div>
     );
   }
