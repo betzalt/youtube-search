@@ -21,7 +21,7 @@ export default class YTResult extends React.Component {
     const mediaPlaceholder = (
       <div style={{
         paddingTop: '75%',
-        backgroundColor: MUI.Styles.Colors.grey300,
+        backgroundColor: MUI.Styles.Colors.grey400,
         zIndex: 0,
       }} />
     );
@@ -30,7 +30,7 @@ export default class YTResult extends React.Component {
       <div style={{
         width: '80%',
         height: '20px',
-        background: MUI.Styles.Colors.grey300,
+        background: MUI.Styles.Colors.grey400,
       }} />
     );
 
@@ -44,7 +44,7 @@ export default class YTResult extends React.Component {
 
         <div style={{
           height: '15px',
-          background: MUI.Styles.Colors.grey300,
+          background: MUI.Styles.Colors.grey400,
         }} />
       </div>
     );
@@ -55,6 +55,7 @@ export default class YTResult extends React.Component {
           <MUI.CardHeader
             title={titlePlaceholder}
             subtitle={subtitlePlaceholder}
+            style={{height: 'auto'}}
             textStyle={{width: '100%'}}
             avatar={<MUI.Avatar style={{display: 'none'}} />} // cant disable this shit
           />
